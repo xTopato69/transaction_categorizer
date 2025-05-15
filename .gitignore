@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific
+logs/
+models/
+*.joblib
+*.csv
+!data/transactions.csv  # Keep the sample data file
+
+# OS
+.DS_Store
+Thumbs.db 
