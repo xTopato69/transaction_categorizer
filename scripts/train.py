@@ -13,30 +13,25 @@ from ml.models.model_trainer import ModelTrainer
 from utils.paths import get_raw_data_path, get_model_path, get_vectorizer_path, ensure_dir_exists, get_models_dir
 from utils.logging import setup_logging
 
-def train_model():
-    """Train the transaction categorization model."""
+
+def train_model():#Train the transaction categorization model.
     try:
-        # Setup logging
         setup_logging()
         logger = logging.getLogger(__name__)
         
         logger.info("Loading transaction data")
         data_path = get_raw_data_path()
         
-        # Preprocess data
-        preprocessor = TransactionPreprocessor()
+        preprocessor = TransactionPreprocessor()        # Preprocess data
         processed_data = preprocessor.preprocess(data_path)
         
-        # Create and fit features
-        feature_engineer = FeatureEngineer()
+        feature_engineer = FeatureEngineer()        # Create and fit features
         x, y = feature_engineer.create_features(processed_data, is_training=True)
         
-        # Train model
-        trainer = ModelTrainer()
+        trainer = ModelTrainer()        # Train model
         results = trainer.train(x, y)
         
-        # Save model and vectorizer
-        model_path = get_model_path()
+        model_path = get_model_path()        # Save model and vectorizer
         vectorizer_path = get_vectorizer_path()
         
         ensure_dir_exists(model_path)
@@ -44,12 +39,11 @@ def train_model():
         
         trainer.save_model(model_path)
         feature_engineer.save_vectorizer(vectorizer_path)
-        # Save label encoder
+        
         label_encoder_path = get_models_dir() / "label_encoder.joblib"
         feature_engineer.save_label_encoder(label_encoder_path)
         
         logger.info("Training completed successfully")
-        # Print a summary for laymen
         print("\nTraining Summary:")
         print("----------------")
         for model_name, metrics in results.items():
@@ -62,6 +56,7 @@ def train_model():
     except Exception as e:
         logger.error(f"Error in training: {str(e)}")
         raise
+
 
 if __name__ == "__main__":
     train_model() 

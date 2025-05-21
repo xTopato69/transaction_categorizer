@@ -5,7 +5,7 @@ import pandas as pd
 from pathlib import Path
 from typing import Dict, Any, List, Union
 
-# Add project root to Python path
+
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
@@ -34,16 +34,9 @@ def predict_batch(transactions: List[Dict[str, Any]]) -> List[str]: #    Predict
 
 def predict_from_file(file_path: Union[str, Path]) -> pd.DataFrame: # Predict categories for transactions from a CSV file.
     try:
-        # Read transactions
         df = pd.read_csv(file_path)
-        
-        # Convert DataFrame rows to dictionaries
-        transactions = df.to_dict('records')
-        
-        # Get predictions
+        transactions = df.to_dict('records')        
         predictions = predict_batch(transactions)
-        
-        # Add predictions to DataFrame
         df['predicted_category'] = predictions
         
         return df
@@ -53,11 +46,9 @@ def predict_from_file(file_path: Union[str, Path]) -> pd.DataFrame: # Predict ca
 
 
 if __name__ == "__main__":
-    # Setup logging
     setup_logging()
     logger = logging.getLogger(__name__)
-    
-    # Example usage
+ 
     if len(sys.argv) > 1:
         file_path = sys.argv[1]
         try:

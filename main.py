@@ -2,17 +2,15 @@ from fastapi import FastAPI, HTTPException
 from api.routes import transactions
 from utils.logging import setup_logging
 
-# Setup logging
 setup_logging()
 
-# Create FastAPI app
 app = FastAPI(
     title="Transaction Categorizer API",
     description="API for categorizing financial transactions using machine learning",
     version="1.0.0"
 )
 
-# Include routers
+
 app.include_router(transactions.router, prefix="/api/v1", tags=["transactions"])
 
 @app.get("/")
